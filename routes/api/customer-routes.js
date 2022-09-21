@@ -1,5 +1,5 @@
 const express = require('express');
-const { Customer } = require('../../models');
+const  Customer  = require('../../models');
 const router = express.Router();
 const app = express();
 const bcrypt = require('bcrypt');
@@ -50,36 +50,47 @@ router.get("/:id",(req,res)=>{
     })
 })
 
-//delete a customer
-router.delete('/:id', async (req, res) => {
-    // if(!req.session.loggedIn){
-    //     res.status(403).json({msg:"must login first!"})
-    // }
-    try {
-        const customerData = await Customer.destroy({
-            where:{
-                id: req.params.id
-                // customerId: req.session.customerId,
-            },
-        });
-
-        if(!customerData) {
-            res.status(404).json({ message: "No client found with this id"})
-            return;
+router.delete('/:id', (req, res) => {
+    Customer.destroy({
+        where: {
+            id: req.params.id
         }
+    })
+    .then((delCustomer)=> {
+        if (!delCustomer){
+            res.status(404).json({msg: 'No customer found with that ID!'})
+        }
+        res.status(200).json(delCustomer)
+    })
+})
+//delete a customer
+// router.delete('/:id', async (req, res) => {
+//     // if(!req.session.loggedIn){
+//     //     res.status(403).json({msg:"must login first!"})
+//     // }
+//     try {
+//         const customerData = await Customer.destroy({
+//             where:{
+//                 id: req.params.id
+//                 // customerId: req.session.customerId,
+//             },
+//         });
 
-        res.status(200).json(customerData);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
+//         if(!customerData) {
+//             res.status(404).json({ message: "No client found with this id"})
+//             return;
+//         }
+
+//         res.status(200).json(customerData);
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// });
 
 // edit profile
 router.put('/:id', (req, res) => {
-    Customer.update({
-        customer_name: req.body.customer_name,
-        customer_password: req.body.customer_password,
-        customer_phone_number: req.body.customer_phone_number
+    Customer.update(req.body, {
+        where: {id: req.params.id},
     }).then(data => {
         res.json(data)
     }).catch(err => {
@@ -93,7 +104,7 @@ router.post('/login', (req, res) => {
       where: {
         name: req.body.name
       }
-    }).then(cusomerData => {
+    }).then(customerData => {
       if (!customerData) {
         res.status(400).json({ message: 'No customer account found!' });
       }
