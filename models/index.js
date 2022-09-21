@@ -1,5 +1,5 @@
 // const Appointment = require('./Appointment');
-// const Customer = require('./Customer');
+const Customer = require('./Customer');
 // // const Service = require('./Service');
 // // const Barber = require('./Barber');
 // // const Image = require("./Image");
@@ -47,7 +47,6 @@
 // // });
 
 
-// module.exports = {
-//     Customer,
-//     Appointment
-// };
+module.exports = 
+    Customer
+    // Appointment

@@ -60,4 +60,4 @@ Customer.init(
     }
 )
 
-module.exports = {Customer};
+module.exports = Customer;
