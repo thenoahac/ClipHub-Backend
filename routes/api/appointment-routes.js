@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 //create an appointment
-router.post('/', async (req, res) => {
+router.post('/', withAuth,(req, res) => {
     Appointment.create({
         appointment_date: req.body_date,
         UserId: req.user
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
             appointment: newAppointment
         })
     }).catch(err => {
-        res.status(500).json({ msg: 'an error has occurred', err })
+        res.status(500).json({ msg: 'an error has occurred!', err })
     })
 })
 

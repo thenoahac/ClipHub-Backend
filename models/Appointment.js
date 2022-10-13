@@ -35,7 +35,7 @@ Appointment.init(
 //                 unique: false
 //             }
 //         },
-        appointment_dates: {
+        appointment_date: {
             type: DataTypes.DATE,
             allowNull: false,
           },
@@ -64,7 +64,7 @@ Appointment.init(
 
 //     },
 //     {
-    //     sequelize,
+        sequelize,
     //     // timestamps: false,
     //     // freezeTableName: true,
     //     // underscored: true,

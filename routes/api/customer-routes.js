@@ -1,5 +1,5 @@
 const express = require('express');
-const Customer = require('../../models');
+const Customer = require('../../models/Customer');
 const router = express.Router();
 const app = express();
 const bcrypt = require('bcrypt');
@@ -133,35 +133,7 @@ router.put('/', (req, res) => {
         res.status(500).json({ msg: "Sheesh it ain't work", err})
     })
 })
-//     const token = req.headers?.authorization?.split(" ").pop()
-//     jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
-//         if (err) {
-//             console.log(err)
-//             res.status(403).json({ msg: "Not logged in", err })
-//         } else {
-//             Customer.update(req.body, {
-//                 where: { id: data.id },
-//                 returning: true, 
-//                 plain: true
-//             }).then(info => {
-//                 const token = jwt.sign({
-//                     id: info.id,
-//                     email: info.email
-//                 }, process.env.JWT_SECRET, {
-//                     expiresIn: '2h'
-//                 })
 
-//                 return res.json({
-//                     token: token,
-//                     data: data
-//                 })
-//             }).catch(err => {
-//                 res.status(500).json({ msg: "sheesh, it ain't work", err })
-//             })
-//         }
-//     })
-
-// })
 
 //log in
 router.post('/login', (req, res) => {
