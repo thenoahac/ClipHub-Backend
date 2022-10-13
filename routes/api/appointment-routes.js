@@ -3,7 +3,7 @@ const router = express.Router();
 const { Appointment } = require('../../models')
 const app = express();
 const jwbt = require('jsonwebtoken');
-const { withAuth } = require('../../utils/tokenAuth')
+const { withAuth } = require('../../utils/toeknAuth')
 
 // get all appointments
 router.get('/', (req, res) => {
