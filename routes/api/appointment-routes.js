@@ -1,57 +1,59 @@
-// const express = require('express');
-// const router = express.Router();
-// const { Appointment } = require('../../models')
-// const app = express();
-// // get all appointments
-// router.get('/', (req, res) => {
-//     Appointment.findAll().then((data) => {
-//         res.json(data)
-//     })
-//         .catch((err) => {
-//             res.status(400).json(err);
-//         })
-// })
-// //create an appointment
-// router.post('/', async (req, res) => {
-//     Appointment.create({
-//         ...req.body,
-//     }).then(res.json({ msg: 'appointment scheduled!' }))
-//         .catch(err => {
-//             res.status(500)
-//             console.log(err)
-//         })
-// })
+const express = require('express');
+const router = express.Router();
+const { Appointment } = require('../../models')
+const app = express();
+const jwbt = require('jsonwebtoken');
+const { withAuth } = require('../../utils/tokenAuth')
 
-// //get one appointment
-// router.get("/:id", (req, res) => {
-//     Appointment.findOne({
-//         where: {
-//             id: req.params.id
-//         }
-//     }).then(data => {
-//         res.json(data)
-//     }).catch(err => {
-//         res.status(500).json({ msg: "this man does not exist", err })
-//     })
-// })
+// get all appointments
+router.get('/', (req, res) => {
+    Appointment.findAll().then((data) => {
+        res.json(data)
+    })
+        .catch((err) => {
+            res.status(400).json(err);
+        })
+})
 
-// router.delete('/:id', async (req, res) => {
-//     try {
-//         const appData = await Appointment.destroy({
-//             where: {
-//                 id: req.params.id,
-//             },
-//         });
+//create an appointment
+router.post('/', async (req, res) => {
+    Appointment.create({
+        appointment_date: req.body_date,
+        UserId: req.user
+    }).then(newAppointment => {
+        return res.json({
+            appointment: newAppointment
+        })
+    }).catch(err => {
+        res.status(500).json({ msg: 'an error has occurred', err })
+    })
+})
 
-//         if (!appData) {
-//             res.status(404).json({ message: "No barber found with this id" })
-//             return;
-//         }
+//get one appointment
+router.get("/:id", (req, res) => {
+    Appointment.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then(data => {
+        res.json(data)
+    }).catch(err => {
+        res.status(500).json({ msg: "this man does not exist", err })
+    })
+})
 
-//         res.status(200).json(appData);
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// });
+router.delete('/:id', (req, res) => {
+    Appointment.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then((delAppointment) => {
+            if (!delAppointment) {
+                res.status(404).json({ msg: 'No appointment found with that ID' })
+            }
+            res.status(200).json(delAppointment)
+        })
+    })
 
-// module.exports = router;
+module.exports = router;

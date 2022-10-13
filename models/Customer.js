@@ -25,14 +25,10 @@ Customer.init(
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
-            // validate: {
-            //     isEmail: true,
-            // },
+            validate: {
+                isEmail: true,
+            },
         },
-        // phone: {
-        //     type: DataTypes.BIGINT,
-        //     allowNull: false,
-        // },
         password: {
             type: DataTypes.STRING,
             allowNull: false,

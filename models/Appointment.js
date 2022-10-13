@@ -1,10 +1,10 @@
-// const { Model, DataTypes, Sequelize } = require('sequelize');
-// const { sequelize }= require('../config/connection');
+const { Model, DataTypes, Sequelize } = require('sequelize');
+const { sequelize }= require('../config/connection');
 
-// class Appointment extends Model { }
+class Appointment extends Model { }
 
-// Appointment.init(
-//     {
+Appointment.init(
+    {
 //         // id: {
 //         //     type: DataTypes.INTEGER,
 //         //     allowNull: false,
@@ -35,10 +35,10 @@
 //                 unique: false
 //             }
 //         },
-//         appointment_date: {
-//             type: Date,
-//             allowNull: false,
-//           },
+        appointment_dates: {
+            type: DataTypes.DATE,
+            allowNull: false,
+          },
 //         //   appointment_date_end: {
 //         //     type: Date,
 //         //     // allowNull: false,
@@ -64,12 +64,12 @@
 
 //     },
 //     {
-//         sequelize,
-//         // timestamps: false,
-//         // freezeTableName: true,
-//         // underscored: true,
-//         // modelName: 'appointment'
-//     }
-// );
+    //     sequelize,
+    //     // timestamps: false,
+    //     // freezeTableName: true,
+    //     // underscored: true,
+    //     // modelName: 'appointment'
+    }
+);
 
-// module.exports = Appointment;
+module.exports = Appointment;
