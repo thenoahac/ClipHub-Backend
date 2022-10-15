@@ -6,6 +6,7 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const app = express();
 const port = process.env.PORT || 3001;
+const { Customer, Appointment } = require("./models")
 
 require('dotenv').config();
 

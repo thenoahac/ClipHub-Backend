@@ -1,4 +1,4 @@
-// const Appointment = require('./Appointment');
+const Appointment = require('./Appointment');
 const Customer = require('./Customer');
 // // const Service = require('./Service');
 // // const Barber = require('./Barber');
@@ -46,7 +46,9 @@ const Customer = require('./Customer');
 // //     onDelete: "CASCADE"
 // // });
 
+module.exports.Customer = Customer;
+module.exports.Appointment =Appointment;
 
-module.exports = 
-    Customer
-    // Appointment
+// module.exports = {
+//     Customer,
+//     Appointment }

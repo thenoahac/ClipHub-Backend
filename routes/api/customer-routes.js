@@ -1,5 +1,5 @@
 const express = require('express');
-const Customer = require('../../models');
+const Customer = require('../../models/Customer');
 const router = express.Router();
 const app = express();
 const bcrypt = require('bcrypt');
@@ -89,61 +89,64 @@ router.delete('/:id', (req, res) => {
             res.status(200).json(delCustomer)
         })
 })
-//delete a customer
-// router.delete('/:id', async (req, res) => {
-//     // if(!req.session.loggedIn){
-//     //     res.status(403).json({msg:"must login first!"})
-//     // }
-//     try {
-//         const customerData = await Customer.destroy({
-//             where:{
-//                 id: req.params.id
-//                 // customerId: req.session.customerId,
-//             },
-//         });
 
-//         if(!customerData) {
-//             res.status(404).json({ message: "No client found with this id"})
-//             return;
-//         }
 
-//         res.status(200).json(customerData);
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// });
+// router.put('/', (req, res) => {
+//     Customer.update (req.body, {
+//         where: { id: req.params.id },
+//     }).then(data => {
+//         const token = jwt.sign({
+//             id: data.id,
+//             email: data.email
+//         }, process.env.JWT_SECRET, {
+//             expiresIn: '2h'
+//         })
 
+//         return res.json({
+//             token: token,
+//             data: data
+//         })
+//     }).catch(err => {
+//         res.status(500).json({ msg: "Sheesh it ain't work", err})
+//     })
+// })
 // edit profile
-router.put('/', (req, res) => {
-    const token = req.headers?.authorization?.split(" ").pop()
-    jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
-        if (err) {
-            console.log(err)
-            res.status(403).json({ msg: "Not logged in", err })
-        } else {
-            Customer.update(req.body, {
-                where: { id: data.id },
-                returning: true, 
-                plain: true
-            }).then(info => {
-                const token = jwt.sign({
-                    id: info.id,
-                    email: info.email
-                }, process.env.JWT_SECRET, {
-                    expiresIn: '2h'
-                })
+router.put("/", (req, res) => {
+	const token = req.headers?.authorization?.split(" ").pop();
+	jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
+		if (err) {
+			console.log(err);
+			res.status(403).json({ msg: "Not logged in", err });
+		} else {
+			Customer.update(req.body, {
+				where: { id: data.id },
+				returning: true,
+				plain: true
+			})
+				.then(info => {
+					const token = jwt.sign(
+						{
+							id: info.id,
+							email: info.email
+						},
+						process.env.JWT_SECRET,
+						{
+							expiresIn: "2h"
+						}
+					);
 
-                return res.json({
-                    token: token,
-                    data: data
-                })
-            }).catch(err => {
-                res.status(500).json({ msg: "sheesh, it ain't work", err })
-            })
-        }
-    })
+					return res.json({
+						token: token,
+						data: data
+					});
+				})
+				.catch(err => {
+					res.status(500).json({ msg: "sheesh, it ain't work", err });
+				});
+		}
+	});
+});
 
-})
 
 //log in
 router.post('/login', (req, res) => {
