@@ -23,15 +23,15 @@ const Customer = require('./Customer');
 //     // foreignKey: 'barber_id'
 // // });
 
-Customer.hasOne(Appointment, {
-    // foreignKey: 'customer_id'
-    // constraints: false
-});
+// Customer.hasOne(Appointment, {
+//     // foreignKey: 'customer_id'
+//     // constraints: false
+// });
 
-Appointment.belongsTo(Customer, {
-    // foreignKey: 'customer_id'
-    constraints: false
-})
+// Appointment.belongsTo(Customer, {
+//     // foreignKey: 'customer_id'
+//     constraints: false
+// })
 
 // // Service.hasMany(Appointment, {
 // //     // foreignKey: 'service_id'
@@ -46,7 +46,9 @@ Appointment.belongsTo(Customer, {
 // //     onDelete: "CASCADE"
 // // });
 
+module.exports.Customer = Customer;
+module.exports.Appointment =Appointment;
 
-module.exports = {
-    Customer,
-    Appointment }
+// module.exports = {
+//     Customer,
+//     Appointment }
